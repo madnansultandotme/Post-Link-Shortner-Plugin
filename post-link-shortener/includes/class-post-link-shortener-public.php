@@ -39,7 +39,7 @@ class Post_Link_Shortener_Public {
         return preg_replace_callback($pattern, function($matches) {
             $shortUrl = $this->get_short_url($matches[0]);
             $customDomain = get_option('pls_custom_domain');
-            return $customDomain ? $customDomain . "/?url=$shortUrl" : home_url('/') . "?url=$shortUrl";
+            return $customDomain ? $customDomain . "/$shortUrl" : home_url('/') . "$shortUrl";
         }, $content);
     }
 
@@ -55,17 +55,14 @@ class Post_Link_Shortener_Public {
         return $shortUrl;
     }
 
-    public function handle_redirect() {
-        if (isset($_GET['url'])) {
-            global $wpdb;
-            $table_name = $wpdb->prefix . 'pls_url_mappings';
-            $shortUrl = sanitize_text_field($_GET['url']);
-            $originalUrl = $wpdb->get_var($wpdb->prepare("SELECT original_url FROM $table_name WHERE short_url = %s", $shortUrl));
-            if ($originalUrl) {
-                $wpdb->query($wpdb->prepare("UPDATE $table_name SET click_count = click_count + 1 WHERE short_url = %s", $shortUrl));
-                wp_redirect($originalUrl);
-                exit;
-            }
+    public function handle_redirect($shortUrl) {
+        global $wpdb;
+        $table_name = $wpdb->prefix . 'pls_url_mappings';
+        $originalUrl = $wpdb->get_var($wpdb->prepare("SELECT original_url FROM $table_name WHERE short_url = %s", $shortUrl));
+        if ($originalUrl) {
+            $wpdb->query($wpdb->prepare("UPDATE $table_name SET click_count = click_count + 1 WHERE short_url = %s", $shortUrl));
+            wp_redirect($originalUrl);
+            exit;
         }
     }
 

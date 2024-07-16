@@ -10,9 +10,9 @@ class Post_Link_Shortener_DB {
         $sql = "CREATE TABLE $table_name (
             id mediumint(9) NOT NULL AUTO_INCREMENT,
             original_url text NOT NULL,
-            short_url varchar(100) NOT NULL,
-            click_count int NOT NULL,
-            PRIMARY KEY (id),
+            short_url varchar(6) NOT NULL,
+            click_count int(11) NOT NULL DEFAULT 0,
+            PRIMARY KEY  (id),
             UNIQUE KEY short_url (short_url)
         ) $charset_collate;";
 
