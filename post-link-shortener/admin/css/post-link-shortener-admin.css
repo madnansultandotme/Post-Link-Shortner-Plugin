@@ -1,0 +1,13 @@
+/* Custom admin styles for Post Link Shortener */
+.wrap h1 {
+    font-size: 2em;
+    margin-bottom: 20px;
+}
+
+.form-table th {
+    width: 150px;
+}
+
+.form-table input[type="text"] {
+    width: 300px;
+}

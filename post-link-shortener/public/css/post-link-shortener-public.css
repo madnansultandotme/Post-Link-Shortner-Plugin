@@ -1,0 +1,16 @@
+/* Custom public styles for Post Link Shortener */
+.post {
+    border: 1px solid #ddd;
+    padding: 15px;
+    margin-bottom: 10px;
+}
+
+.post a {
+    color: #0073aa;
+}
+
+.post .click-count {
+    float: right;
+    font-size: 0.9em;
+    color: #999;
+}
